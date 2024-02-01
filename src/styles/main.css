@@ -10,6 +10,7 @@
 
 .bg-video .video {
   height: 100vh;
+  width: 100vw;
 }
 
 .bg-video::after {
@@ -107,7 +108,7 @@
 }
 
 .card-box {
-  height: 9rem;
+  height: 15rem;
   width: 100%;
   display: flex;
   flex-direction: row;
