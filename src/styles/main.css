@@ -35,9 +35,10 @@
   height: 100vh;
 }
 
-.container__Left {
+.container__left {
   width: 35%;
   min-width: 300px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
@@ -66,6 +67,7 @@
   justify-content: space-between;
   height: 6rem;
   width: 100%;
+  text-align: center;
 }
 
 #card-name {
@@ -88,6 +90,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1rem;
+  align-items: center;
   padding-top: 0.1rem;
   height: 300px;
 }
@@ -120,4 +124,12 @@
   height: 11.2rem;
   width: 8rem;
   border-radius: 8px;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.2);
 }
