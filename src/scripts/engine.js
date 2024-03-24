@@ -1,37 +1,35 @@
-const state = {
-  score: {
-    playerScore: 0,
-    computerScore: 0,
-    scoreBox: document.querySelector('#score_points'),
+const gameStatus = {
+  gameScore: {
+    pointsTable: document.querySelector('#pointsTable'),
+    playerPoints: 0,
+    computerPoints: 0,
   },
-  cardSprites: {
-    avatar: document.querySelector('#card-image'),
-    name: document.querySelector('#card-name'),
-    type: document.querySelector('#card-type'),
+  cardDetails: {
+    cardImage: document.querySelector('#cardImage'),
+    cardName: document.querySelector('#cardName'),
+    cardType: document.querySelector('#cardType'),
   },
-  fieldCards: {
-    player: document.querySelector('#player-field-card'),
-    computer: document.querySelector('#computer-field-card'),
+  duelingMat: {
+    playerField: document.querySelector('#playerField'),
+    computerField: document.querySelector('#computerField'),
   },
-  playerSides: {
-    player: 'player-cards',
-    playerBox: document.querySelector('#player-cards'),
-    computer: 'computer-cards',
-    computerBox: document.querySelector('#computer-cards'),
+  playersDeck: {
+    player: 'playerCards',
+    computer: 'computerCards',
+    playerCards: document.querySelector('#playerCards'),
+    computerCards: document.querySelector('#computerCards'),
   },
   actions: {
     button: document.querySelector('#next-duel'),
   },
 };
 
-const pathImages = './src/assets/icons';
-
 const cardDate = [
   {
     id: 0,
     name: 'Blue Eyes White Dragon',
     type: 'Paper',
-    img: `${pathImages}/dragon.png`,
+    img: `./src/assets/icons/dragon.png`,
     winOf: [1],
     loseOf: [2],
   },
@@ -39,7 +37,7 @@ const cardDate = [
     id: 1,
     name: 'Dark Magician',
     type: 'Rock',
-    img: `${pathImages}/magician.png`,
+    img: `./src/assets/icons/magician.png`,
     winOf: [2],
     loseOf: [0],
   },
@@ -47,25 +45,20 @@ const cardDate = [
     id: 2,
     name: 'Exodia',
     type: 'Scissors',
-    img: `${pathImages}/exodia.png`,
+    img: `./src/assets/icons/exodia.png`,
     winOf: [0],
     loseOf: [1],
   },
 ];
 
-async function getRandomCardId() {
-  const randomIndex = Math.floor(Math.random() * cardDate.length);
-  return cardDate[randomIndex].id;
-}
-
-async function createCardImage(idCard, fieldSide) {
+function createCardImage(idCard, fieldSide) {
   const cardImage = document.createElement('img');
   cardImage.setAttribute('height', '150px');
   cardImage.setAttribute('src', './src/assets/icons/card-back.png');
   cardImage.setAttribute('data-id', idCard);
   cardImage.classList.add('card');
 
-  if (fieldSide === state.playerSides.player) {
+  if (fieldSide === gameStatus.playersDeck.player) {
     cardImage.addEventListener('mouseover', () => {
       drawSelectCard(idCard);
     });
@@ -95,36 +88,42 @@ async function setCardsField(cardId) {
   await drawButton(duelResults);
 }
 
-async function drawCardsInField(cardId, computerCardId) {
-  state.fieldCards.player.src = cardDate[cardId].img;
-  state.fieldCards.computer.src = cardDate[computerCardId].img;
+function getRandomCardId() {
+  const randomIndex = Math.floor(Math.random() * cardDate.length);
+
+  return cardDate[randomIndex].id;
 }
 
-async function hiddenCardDetails() {
-  state.cardSprites.avatar.src = '';
-  state.cardSprites.name.innerText = '';
-  state.cardSprites.type.innerText = '';
+function drawCardsInField(cardId, computerCardId) {
+  gameStatus.duelingMat.playerField.src = cardDate[cardId].img;
+  gameStatus.duelingMat.computerField.src = cardDate[computerCardId].img;
 }
 
-async function showHiddenCardFieldsImages(value) {
+function hiddenCardDetails() {
+  gameStatus.cardDetails.cardImage.src = '';
+  gameStatus.cardDetails.cardName.innerText = '';
+  gameStatus.cardDetails.cardType.innerText = '';
+}
+
+function showHiddenCardFieldsImages(value) {
   if (value === true) {
-    state.fieldCards.player.style.display = 'block';
-    state.fieldCards.computer.style.display = 'block';
+    gameStatus.duelingMat.playerField.style.display = 'block';
+    gameStatus.duelingMat.computerField.style.display = 'block';
   }
 
   if (value === false) {
-    state.fieldCards.player.style.display = 'none';
-    state.fieldCards.computer.style.display = 'none';
+    gameStatus.duelingMat.playerField.style.display = 'none';
+    gameStatus.duelingMat.computerField.style.display = 'none';
   }
 }
 
-async function updateScore() {
-  state.score.scoreBox.innerHTML = `Win: ${state.score.playerScore} | Lose: ${state.score.computerScore}`;
+function updateScore() {
+  gameStatus.gameScore.pointsTable.innerHTML = `Win: ${gameStatus.gameScore.playerPoints} | Lose: ${gameStatus.gameScore.computerPoints}`;
 }
 
-async function drawButton(text) {
-  state.actions.button.innerText = String(text).toUpperCase();
-  state.actions.button.style.display = 'block';
+function drawButton(text) {
+  gameStatus.actions.button.innerText = String(text).toUpperCase();
+  gameStatus.actions.button.style.display = 'block';
 }
 
 async function checkDuelResults(playerCardId, computerCardId) {
@@ -134,12 +133,12 @@ async function checkDuelResults(playerCardId, computerCardId) {
 
   if (playerCard.winOf.includes(computerCardId)) {
     duelResults = 'win';
-    state.score.playerScore++;
+    gameStatus.gameScore.playerPoints++;
   }
 
   if (playerCard.loseOf.includes(computerCardId)) {
     duelResults = 'lose';
-    state.score.computerScore++;
+    gameStatus.gameScore.computerPoints++;
   }
 
   await playAudio(duelResults);
@@ -147,24 +146,24 @@ async function checkDuelResults(playerCardId, computerCardId) {
   return duelResults;
 }
 
-async function removeAllCardsImage() {
-  let cards = state.playerSides.computerBox;
+function removeAllCardsImage() {
+  let cards = gameStatus.playersDeck.computerCards;
   let imgElements = cards.querySelectorAll('img');
   imgElements.forEach((img) => {
     img.remove();
   });
 
-  cards = state.playerSides.playerBox;
+  cards = gameStatus.playersDeck.playerCards;
   imgElements = cards.querySelectorAll('img');
   imgElements.forEach((img) => {
     img.remove();
   });
 }
 
-async function drawSelectCard(index) {
-  state.cardSprites.avatar.src = cardDate[index].img;
-  state.cardSprites.name.innerText = cardDate[index].name;
-  state.cardSprites.type.innerText = `Attibute ${cardDate[index].type}`;
+function drawSelectCard(index) {
+  gameStatus.cardDetails.cardImage.src = cardDate[index].img;
+  gameStatus.cardDetails.cardName.innerText = cardDate[index].name;
+  gameStatus.cardDetails.cardType.innerText = `Attibute ${cardDate[index].type}`;
 }
 
 async function drawCards(cardNumbers, fieldSide) {
@@ -176,28 +175,31 @@ async function drawCards(cardNumbers, fieldSide) {
   }
 }
 
-async function resetDuel() {
-  state.cardSprites.avatar.src = '';
-  state.actions.button.style.display = 'none';
+function resetDuel() {
+  gameStatus.cardDetails.cardImage.src = '';
+  gameStatus.actions.button.style.display = 'none';
 
-  state.fieldCards.player.style.display = 'none';
-  state.fieldCards.computer.style.display = 'none';
+  gameStatus.duelingMat.playerField.style.display = 'none';
+  gameStatus.duelingMat.computerField.style.display = 'none';
 
   init();
 }
 
-async function playAudio(status) {
+function playAudio(status) {
   const audio = new Audio(`./src/assets/audios/${status}.wav`);
+  
   try {
     audio.play();
-  } catch {}
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function init() {
   showHiddenCardFieldsImages(false);
 
-  drawCards(5, state.playerSides.player);
-  drawCards(5, state.playerSides.computer);
+  drawCards(5, gameStatus.playersDeck.player);
+  drawCards(5, gameStatus.playersDeck.computer);
 
   const bgm = document.querySelector('#bgm');
   bgm.play();

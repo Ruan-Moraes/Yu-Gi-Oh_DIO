@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="src/styles/containers_and_frames.css" />
     <link rel="stylesheet" href="src/styles/buttons.css" />
     <link rel="stylesheet" href="src/styles/main.css" />
-    <script src="src/scripts/engine.js" defer></script>
     <link
       rel="shortcut icon"
       href="src/assets/favicon/Favicon.ico"
       type="image/x-icon"
     />
-
+    <script src="src/scripts/engine.js" defer></script>
     <title>Yu-Gi-Oh Jo-ken-po Edition</title>
   </head>
   <body>
-    <audio id="bgm" loop >
+    <audio id="bgm" loop>
       <source src="src/assets/audios/egyptian_duel.mp3" type="audio/mp3" />
     </audio>
 
@@ -29,30 +28,31 @@
     <div class="container">
       <div class="container__left framed-golden-2">
         <div class="score_box frame">
-          <span id="score_points"> WIN : 0 | LOSE : 0</span>
+          <span id="pointsTable"> WIN : 0 | LOSE : 0</span>
         </div>
         <div class="menu_avatar">
-          <img id="card-image" />
+          <img id="cardImage" />
         </div>
         <div class="card_details frame">
-          <p id="card-name">Selecione</p>
-          <p id="card-type">um carta</p>
+          <p id="cardName">Selecione</p>
+          <p id="cardType">um carta</p>
         </div>
       </div>
       <div class="container__right">
         <div class="card-box__container">
-          <div class="card-box framed" id="computer-cards"></div>
+          <div class="card-box framed" id="computerCards"></div>
 
           <div class="card-versus__container">
+            <!-- Inverte no flex reverse -->
             <div class="versus-top">
               <div class="card-infield">
-                <img id="computer-field-card" height="180px" width="125px" />
+                <img id="computerField" height="180px" width="125px" />
               </div>
 
               <img height="100px" src="src/assets/icons/millenium2.png" />
 
               <div class="card-infield">
-                <img id="player-field-card" height="180px" width="125px" />
+                <img id="playerField" height="180px" width="125px" />
               </div>
             </div>
 
@@ -62,8 +62,7 @@
               </button>
             </div>
           </div>
-
-          <div class="card-box framed" id="player-cards"></div>
+          <div class="card-box framed" id="playerCards"></div>
         </div>
       </div>
     </div>
