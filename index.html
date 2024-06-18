@@ -19,50 +19,44 @@
     <audio id="bgm" loop>
       <source src="src/assets/audios/egyptian_duel.mp3" type="audio/mp3" />
     </audio>
-
-    <div class="bg-video">
+    <div class="bg__video">
       <video class="video" autoplay loop muted>
         <source src="src/assets/video/yugi.mp4" type="video/mp4" />
       </video>
     </div>
     <div class="container">
-      <div class="container__left framed-golden-2">
-        <div class="score_box frame">
-          <span id="pointsTable"> WIN : 0 | LOSE : 0</span>
-        </div>
-        <div class="menu_avatar">
-          <img id="cardImage" />
-        </div>
-        <div class="card_details frame">
-          <p id="cardName">Selecione</p>
-          <p id="cardType">um carta</p>
-        </div>
-      </div>
-      <div class="container__right">
-        <div class="card-box__container">
-          <div class="card-box framed" id="computerCards"></div>
-
+      <div class="container__battle">
+        <div class="card__boxContainer">
+          <div class="card__box framed" id="computerCards"></div>
           <div class="card-versus__container">
-            <!-- Inverte no flex reverse -->
-            <div class="versus-top">
-              <div class="card-infield">
-                <img id="computerField" height="180px" width="125px" />
+            <div class="versus__top">
+              <div class="card__infield">
+                <img id="computerField" height="95%" width="95%" />
               </div>
-
               <img height="100px" src="src/assets/icons/millenium2.png" />
-
-              <div class="card-infield">
-                <img id="playerField" height="180px" width="125px" />
+              <div class="card__infield">
+                <img id="playerField" height="95%" width="95%" />
               </div>
             </div>
-
-            <div class="versus-bottom">
-              <button id="next-duel" class="rpgui-button" onclick="resetDuel()">
+            <div class="versus__bottom">
+              <button id="nextDuel" class="rpgui-button" onclick="resetDuel()">
                 Ganhou
               </button>
             </div>
           </div>
-          <div class="card-box framed" id="playerCards"></div>
+          <div class="card__box framed" id="playerCards"></div>
+        </div>
+      </div>
+      <div class="container__scoreboard framed-golden-2">
+        <div class="card__details frame">
+          <p id="cardName">Selecione</p>
+          <p id="cardType">um carta</p>
+        </div>
+        <div class="menu_avatar">
+          <img id="cardImage" />
+        </div>
+        <div class="score__box frame">
+          <span id="pointsTable"> WIN : 0 | LOSE : 0</span>
         </div>
       </div>
     </div>

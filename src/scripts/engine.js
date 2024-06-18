@@ -20,7 +20,7 @@ const gameStatus = {
     computerCards: document.querySelector('#computerCards'),
   },
   actions: {
-    button: document.querySelector('#next-duel'),
+    button: document.querySelector('#nextDuel'),
   },
 };
 
@@ -53,7 +53,6 @@ const cardDate = [
 
 function createCardImage(idCard, fieldSide) {
   const cardImage = document.createElement('img');
-  cardImage.setAttribute('height', '150px');
   cardImage.setAttribute('src', './src/assets/icons/card-back.png');
   cardImage.setAttribute('data-id', idCard);
   cardImage.classList.add('card');
@@ -73,12 +72,10 @@ function createCardImage(idCard, fieldSide) {
 
 async function setCardsField(cardId) {
   await removeAllCardsImage();
+  await showHiddenCardFieldsImages(true);
+  await hiddenCardDetails();
 
   const computerCardId = await getRandomCardId();
-
-  await showHiddenCardFieldsImages(true);
-
-  await hiddenCardDetails();
 
   drawCardsInField(cardId, computerCardId);
 
@@ -122,6 +119,7 @@ function updateScore() {
 }
 
 function drawButton(text) {
+  gameStatus.actions.button.parentElement.style.display = 'block';
   gameStatus.actions.button.innerText = String(text).toUpperCase();
   gameStatus.actions.button.style.display = 'block';
 }
@@ -133,11 +131,13 @@ async function checkDuelResults(playerCardId, computerCardId) {
 
   if (playerCard.winOf.includes(computerCardId)) {
     duelResults = 'win';
+
     gameStatus.gameScore.playerPoints++;
   }
 
   if (playerCard.loseOf.includes(computerCardId)) {
     duelResults = 'lose';
+
     gameStatus.gameScore.computerPoints++;
   }
 
@@ -149,11 +149,13 @@ async function checkDuelResults(playerCardId, computerCardId) {
 function removeAllCardsImage() {
   let cards = gameStatus.playersDeck.computerCards;
   let imgElements = cards.querySelectorAll('img');
+
   imgElements.forEach((img) => {
     img.remove();
   });
 
   cards = gameStatus.playersDeck.playerCards;
+
   imgElements = cards.querySelectorAll('img');
   imgElements.forEach((img) => {
     img.remove();
@@ -177,6 +179,7 @@ async function drawCards(cardNumbers, fieldSide) {
 
 function resetDuel() {
   gameStatus.cardDetails.cardImage.src = '';
+
   gameStatus.actions.button.style.display = 'none';
 
   gameStatus.duelingMat.playerField.style.display = 'none';
@@ -185,13 +188,13 @@ function resetDuel() {
   init();
 }
 
-function playAudio(status) {
+async function playAudio(status) {
   const audio = new Audio(`./src/assets/audios/${status}.wav`);
-  
+
   try {
-    audio.play();
+    await audio.play();
   } catch (err) {
-    console.error(err);
+    console.clear();
   }
 }
 
@@ -202,6 +205,7 @@ function init() {
   drawCards(5, gameStatus.playersDeck.computer);
 
   const bgm = document.querySelector('#bgm');
+
   bgm.play();
 }
 
