@@ -26,4 +26,4 @@ Você tem duas maneiras de testar o projeto:
 
 ### 2. Através do GitHub Pages
 
-1. **Acessar o Projeto**: Acesse o projeto clicando [aqui]().
+1. **Acessar o Projeto**: Acesse o projeto clicando [aqui](https://ruan-moraes.github.io/Yu-Gi-Oh_DIO/).
